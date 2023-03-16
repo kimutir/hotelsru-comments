@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
+    <body>
+        <main class="comments">
+            <form action="" id="add-comment-form" class="add-comment">
+                <div class="add-comment__info">
+                    <div class="add-comment__info_item add-comment__info_name">
+                        <label for="user-name">Имя:</label>
+                        <input id="user-name" type="text" autocomplete="off" />
+                        <p class="add-comment__info_name-error">Введите имя</p>
+                    </div>
+                    <div class="add-comment__info_item add-comment__info_date">
+                        <label for="user-date">Дата:</label>
+                        <input id="user-date" type="text" placeholder="DD.MM.YYYY" autocomplete="off" />
+                        <p class="add-comment__info_date-error">Неверный формат даты</p>
+                    </div>
+                </div>
+                <div class="add-comment__text">
+                    <label for="user-comment">
+                        Комментарий:
+                        <p class="add-comment__text_error">Введите комментарий</p>
+                    </label>
+                    <textarea name="" id="user-comment" cols="30" rows="10" placeholder="Ваш комментарий"></textarea>
+                    <input type="submit" class="add-comment__text_submit" />
+                </div>
+            </form>
+            <ul class="comments-list"></ul>
+        </main>
+        <script type="text/javascript" src="bundle.js"></script>
+    </body>
+</html>
