@@ -3,6 +3,7 @@ import './style.scss';
 const addCommentForm = document.forms['comment-form'];
 const userNameInput = addCommentForm.elements['user-name'];
 const dateInput = addCommentForm.elements['user-date'];
+const submitButton = addCommentForm.elements.submit;
 const userCommentText = document.querySelector('#user-comment');
 const commentsList = document.querySelector('.comments-list');
 const nameError = document.querySelector('.add-comment__info_name-error');
@@ -137,6 +138,19 @@ addCommentForm.addEventListener('submit', (e) => {
     userNameInput.value = '';
     dateInput.value = '';
     userCommentText.style.height = '50px';
+});
+
+userCommentText.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') {
+        e.preventDefault();
+
+        if (e.shiftKey) {
+            this.value = this.value + '\n';
+            userCommentText.style.height = e.target.scrollHeight + 'px';
+            return;
+        }
+        submitButton.click();
+    }
 });
 
 commentsList.addEventListener('click', function (e) {
