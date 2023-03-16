@@ -1,15 +1,13 @@
 import './style.scss';
 
-const addCommentForm = document.querySelector('#add-comment-form');
-const userNameInput = document.querySelector('#user-name');
-const dateInput = document.querySelector('#user-date');
+const addCommentForm = document.forms['comment-form'];
+const userNameInput = addCommentForm.elements['user-name'];
+const dateInput = addCommentForm.elements['user-date'];
 const userCommentText = document.querySelector('#user-comment');
 const commentsList = document.querySelector('.comments-list');
 const nameError = document.querySelector('.add-comment__info_name-error');
 const dateError = document.querySelector('.add-comment__info_date-error');
 const commentError = document.querySelector('.add-comment__text_error');
-let deleteButtons;
-let likeButtons;
 
 let userName = '';
 let userDate = '';
@@ -18,11 +16,9 @@ let error = false;
 
 function renderComment({ user, comment, date }) {
     const dateToRender = parseDate(date);
-    const id = String(Date.now());
     const li = document.createElement('li');
-    li.setAttribute('id', id);
     li.classList.add('comments-list__item');
-    li.innerHTML = `<article data-id="${id}" class="comment-item"><div class="comment-item__content"><p class="comment-item__content_name">${user}</p><p class="comment-item__content_text">${comment}</p><p class="comment-item__content_date">Добавлен: ${dateToRender}</p></div><div class="comment-item__actions"><div class="comment-item__actions_delete"></div><div class="comment-item__actions_like"></div></div></article>`;
+    li.innerHTML = `<article class="comment-item"><div class="comment-item__content"><p class="comment-item__content_name">${user}</p><p class="comment-item__content_text">${comment}</p><p class="comment-item__content_date">Добавлен: ${dateToRender}</p></div><div class="comment-item__actions"><div class="comment-item__actions_delete"></div><div class="comment-item__actions_like"></div></div></article>`;
     return li;
 }
 
@@ -42,16 +38,8 @@ function parseDate(date) {
 
     return `${day}.${month}.${year}, ${today.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}`;
 }
-function onDeleteComment(e) {
-    const id = e.target.parentElement.parentElement.getAttribute('data-id');
-    const currentLi = document.querySelector(`li[id="${id}"]`);
-    currentLi.remove();
-}
-function onLikeComment(e) {
-    e.target.classList.toggle('liked');
-}
+
 function validateDate(date) {
-    console.log('validation');
     if (!date.includes('.') && date.length === 8) {
         dateInput.value = date.slice(0, 2) + '.' + date.slice(2, 4) + '.' + date.slice(4, 8);
     }
@@ -82,7 +70,7 @@ userNameInput.addEventListener('input', (e) => {
     }
 });
 
-dateInput.addEventListener('focusout', (e) => {
+dateInput.addEventListener('blur', (e) => {
     validateDate(e.target.value);
 });
 
@@ -144,12 +132,19 @@ addCommentForm.addEventListener('submit', (e) => {
     error = false;
     userName = '';
     userComment = '';
+    userDate = '';
     userCommentText.value = '';
     userNameInput.value = '';
     dateInput.value = '';
+});
 
-    deleteButtons = document.querySelectorAll('.comment-item__actions_delete');
-    likeButtons = document.querySelectorAll('.comment-item__actions_like');
-    deleteButtons.forEach((button) => button.addEventListener('click', onDeleteComment));
-    likeButtons.forEach((button) => button.addEventListener('click', onLikeComment));
+commentsList.addEventListener('click', function (e) {
+    console.log();
+
+    if (e.target.closest('.comment-item__actions_like')) {
+        e.target.classList.toggle('liked');
+    }
+    if (e.target.closest('.comment-item__actions_delete')) {
+        e.target.closest('li').remove();
+    }
 });
