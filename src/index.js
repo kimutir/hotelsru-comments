@@ -136,6 +136,7 @@ addCommentForm.addEventListener('submit', (e) => {
     userCommentText.value = '';
     userNameInput.value = '';
     dateInput.value = '';
+    userCommentText.style.height = '50px';
 });
 
 commentsList.addEventListener('click', function (e) {
